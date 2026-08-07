@@ -29,7 +29,7 @@ done
 
 printf 'Requesting fresh SPICE session for VM %s...\n' "$PVE_VMID"
 if ! session_json=$(api_spice_session); then
-    printf 'Could not obtain SPICE session.\n' >&2
+    printf 'Could not obtain SPICE session; remote-viewer will not be launched.\n' >&2
     exit 1
 fi
 

@@ -15,6 +15,7 @@ api_call() {
         --connect-timeout "${API_CONNECT_TIMEOUT:-5}" \
         --max-time "${API_TIMEOUT:-15}" \
         --request "$method" \
+        --fail-with-body \
         --header "Authorization: PVEAPIToken=${PVE_TOKEN_ID}=${PVE_TOKEN_SECRET}" \
         "${api_url%/}/${endpoint#/}" \
         "$@"
@@ -30,6 +31,7 @@ api_start_vm() {
 }
 
 api_spice_session() {
-    api_call POST "nodes/${PVE_NODE}/qemu/${PVE_VMID}/spiceproxy" \
-        | jq -ec '.data'
+    local response
+    response=$(api_call POST "nodes/${PVE_NODE}/qemu/${PVE_VMID}/spiceproxy") || return 1
+    jq -ec '.data' <<<"$response"
 }
