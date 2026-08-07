@@ -65,3 +65,30 @@ chmod +x test-viewer.sh
 
 The test requests a fresh SPICE session and launches `remote-viewer`. It does
 not start or stop the VM.
+
+
+note to self:
+on each wyse->
+git clone https://github.com/ashtonx24/proxmox-wyse-launcher.git
+cd proxmox-wyse-launcher
+sudo bash setup.sh debian
+
+then 
+sudo nano /etc/proxmox-launcher/config.env
+enter the values either from the bak on .bak or use the 'config' itself.
+
+match this format:
+PVE_HOST='192.168.2.2'
+PVE_NODE='wisdom'
+PVE_VMID='assigned-vmid'
+PVE_TOKEN_ID='wyse01@pve!launcher'
+PVE_TOKEN_SECRET='actual-secret'
+PVE_TLS_VERIFY='0'
+
+
+any error, try again after running: echo '192.168.2.2 wisdom.school.local' | sudo tee -a /etc/hosts
+
+sudo -u debian /opt/proxmox-launcher/runtime.sh
+
+then ONLY AFTER THAT 
+sudo bash setup.sh --enable-kiosk debian
