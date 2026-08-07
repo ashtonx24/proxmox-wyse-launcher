@@ -18,6 +18,13 @@ sudo reboot
 The installer does not replace an existing `config.env`. Use a different
 configuration file on each Wyse; the runtime code is identical.
 
+The first install leaves kiosk autostart disabled. Test the runtime manually,
+then enable kiosk mode with:
+
+```sh
+sudo ./setup.sh --enable-kiosk <lightdm-autologin-user>
+```
+
 Required packages are `curl`, `jq`, `remote-viewer`, and `sudo`.
 
 ## Test from the Windows computer

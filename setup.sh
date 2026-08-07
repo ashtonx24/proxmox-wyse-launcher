@@ -10,6 +10,12 @@ SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 INSTALL_DIR='/opt/proxmox-launcher'
 CONFIG_DIR='/etc/proxmox-launcher'
 CONFIG_FILE="$CONFIG_DIR/config.env"
+ENABLE_KIOSK=0
+
+if [[ "${1:-}" == '--enable-kiosk' ]]; then
+    ENABLE_KIOSK=1
+    shift
+fi
 
 KIOSK_USER="${1:-}"
 if [[ -z "$KIOSK_USER" && -r /etc/lightdm/lightdm.conf ]]; then
@@ -46,6 +52,7 @@ printf '%s ALL=(root) NOPASSWD: /usr/bin/systemctl poweroff\n' "$KIOSK_USER" \
 chmod 0440 /etc/sudoers.d/proxmox-launcher
 visudo -cf /etc/sudoers.d/proxmox-launcher
 
+if [[ "$ENABLE_KIOSK" -eq 1 ]]; then
 cat > /etc/xdg/autostart/proxmox-launcher.desktop <<EOF
 [Desktop Entry]
 Type=Application
@@ -57,6 +64,10 @@ NoDisplay=true
 X-GNOME-Autostart-enabled=true
 EOF
 chmod 0644 /etc/xdg/autostart/proxmox-launcher.desktop
+fi
 
 echo 'Installation complete.'
 echo "Edit $CONFIG_FILE, then reboot or log out and back in."
+if [[ "$ENABLE_KIOSK" -eq 0 ]]; then
+    echo 'Kiosk autostart is not enabled. Re-run with --enable-kiosk after testing.'
+fi
