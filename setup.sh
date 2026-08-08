@@ -31,7 +31,7 @@ if ! id "$KIOSK_USER" >/dev/null 2>&1; then
 fi
 
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y curl jq remote-viewer sudo
+DEBIAN_FRONTEND=noninteractive apt-get install -y curl jq virt-viewer sudo
 
 install -d -m 0755 "$INSTALL_DIR" "$CONFIG_DIR"
 install -m 0755 "$SCRIPT_DIR/runtime.sh" "$SCRIPT_DIR/api.sh" \

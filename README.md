@@ -25,7 +25,7 @@ then enable kiosk mode with:
 sudo ./setup.sh --enable-kiosk <lightdm-autologin-user>
 ```
 
-Required packages are `curl`, `jq`, `remote-viewer`, and `sudo`.
+Required packages are `curl`, `jq`, `virt-viewer`, and `sudo`.
 
 ## Test from the Windows computer
 
